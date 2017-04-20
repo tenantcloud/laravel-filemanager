@@ -19,24 +19,17 @@ class DownloadController extends Controller {
 
 
     /**
-     * constructor
-     */
-    function __construct()
-    {
-        if (Session::get('lfm_type') == "Images")
-            $this->file_location = Config::get('lfm.images_dir');
-        else
-            $this->file_location = Config::get('lfm.files_dir');
-    }
-
-
-    /**
      * Download a file
      *
      * @return mixed
      */
     public function getDownload()
     {
+    	if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         $file_to_download = Input::get('file');
         $dir = Input::get('dir');
         return Response::download(base_path()

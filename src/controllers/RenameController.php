@@ -15,19 +15,15 @@ class RenameController extends Controller {
 
     protected $file_location;
 
-    function __construct()
-    {
-        if (Session::get('lfm_type') == "Images")
-            $this->file_location = Config::get('lfm.images_dir');
-        else
-            $this->file_location = Config::get('lfm.files_dir');
-    }
-
 
     /**
      * @return string
      */
     function getRename(){
+	if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
 
         $file_to_rename = Input::get('file');
         $dir = Input::get('dir');

@@ -19,24 +19,17 @@ class DeleteController extends Controller {
 
 
     /**
-     * constructor
-     */
-    function __construct()
-    {
-        if (Session::get('lfm_type') == "Images")
-            $this->file_location = Config::get('lfm.images_dir');
-        else
-            $this->file_location = Config::get('lfm.files_dir');
-    }
-
-
-    /**
      * Delete image and associated thumbnail
      *
      * @return mixed
      */
     public function getDelete()
     {
+    	if (Session::get('lfm_type') == "Images")
+    	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         $to_delete = Input::get('items');
         $base = Input::get("base");
 

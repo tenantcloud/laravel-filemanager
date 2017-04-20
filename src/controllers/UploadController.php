@@ -31,11 +31,6 @@ class UploadController extends Controller {
     function __construct()
     {
         $this->allowed_types = Config::get('lfm.allowed_file_types');
-
-        if (Session::get('lfm_type') == "Images")
-            $this->file_location = Config::get('lfm.images_dir');
-        else
-            $this->file_location = Config::get('lfm.files_dir');
     }
 
 
@@ -47,6 +42,11 @@ class UploadController extends Controller {
      */
     public function upload()
     {
+	if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         // sanity check
         if ( ! Input::hasFile('file_to_upload'))
         {

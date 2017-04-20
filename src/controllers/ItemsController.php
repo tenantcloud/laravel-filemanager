@@ -24,24 +24,17 @@ class ItemsController extends Controller {
 
 
     /**
-     * constructor
-     */
-    function __construct()
-    {
-        if (Session::get('lfm_type') == "Images")
-            $this->file_location = Config::get('lfm.images_dir');
-        else
-            $this->file_location = Config::get('lfm.files_dir');
-    }
-
-
-    /**
      * Return json list of files
      *
      * @return mixed
      */
     public function getFiles()
     {
+	if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         if (Input::has('base'))
         {
             $files = File::files(base_path($this->file_location . Input::get('base')));
@@ -119,6 +112,11 @@ class ItemsController extends Controller {
      */
     public function getImages()
     {
+	if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         if (Input::has('base'))
         {
             $files = File::files(base_path($this->file_location . Input::get('base')));

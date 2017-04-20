@@ -16,14 +16,6 @@ class FolderController extends Controller {
 
     protected $file_location;
 
-    function __construct()
-    {
-        if (Session::get('lfm_type') == "Images")
-            $this->file_location = Config::get('lfm.images_dir');
-        else
-            $this->file_location = Config::get('lfm.files_dir');
-    }
-
 
     /**
      * Get list of folders as json to populate treeview
@@ -32,6 +24,11 @@ class FolderController extends Controller {
      */
     public function getFolders()
     {
+        if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         $directories = File::directories(base_path($this->file_location));
         $final_array = [];
 
@@ -55,6 +52,11 @@ class FolderController extends Controller {
      */
     public function getAddfolder()
     {
+	if (Session::get('lfm_type') == "Images")
+	    $this->file_location = Config::get('lfm.images_dir');
+	else
+	    $this->file_location = Config::get('lfm.files_dir');
+
         $folder_name = Str::slug(Input::get('name'));
 
         $path = base_path($this->file_location);

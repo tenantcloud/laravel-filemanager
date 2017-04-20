@@ -19,20 +19,6 @@ class LfmController extends Controller {
      */
     protected $file_location;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        if ((Session::has('lfm_type')) && (Session::get('lfm_type') == 'Files'))
-        {
-            $this->file_location = Config::get('lfm.files_dir');
-        } else
-        {
-            $this->file_location = Config::get('lfm.images_dir');
-        }
-    }
-
 
     /**
      * Show the filemanager
@@ -41,6 +27,14 @@ class LfmController extends Controller {
      */
     public function show()
     {
+        if ((Session::has('lfm_type')) && (Session::get('lfm_type') == 'Files'))
+        {
+	    $this->file_location = Config::get('lfm.files_dir');
+        } else
+        {
+	    $this->file_location = Config::get('lfm.images_dir');
+	}
+
         if ((Input::has('type')) && (Input::get('type') == "Files"))
         {
             Session::put('lfm_type', 'Files');
