@@ -44,11 +44,10 @@ class LaravelFilemanagerServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register()
-    {
-        $this->app['laravel-filemanager'] = $this->app->share(function ()
-        {
-            return true;
-        });
+    {   
+        $this->app->singleton('laravel-filemanager', function($app)
+		{
+			return true;
+		});
     }
-
 }
