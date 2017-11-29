@@ -4,6 +4,9 @@ return [
     'use_package_routes' => true,
     'middleware' => 'auth',
 
+	// 'aws' or 'local'
+	'storage_type'       => 'aws',
+
     'images_dir'         => 'public/vendor/laravel-filemanager/images/',
     'images_url'         => '/vendor/laravel-filemanager/images/',
 

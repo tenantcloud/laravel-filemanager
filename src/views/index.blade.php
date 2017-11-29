@@ -172,7 +172,12 @@
                 notify(responseText);
             }
             $("#file_to_upload").val('');
-            loadImages();
+            @if (Config::get('lfm.storage_type') === 'aws') {
+                useFile(responseText)
+            } @else {
+                loadImages();
+            }
+            @endif
         }
 
         $("#uploadForm").ajaxSubmit(options);
@@ -349,19 +354,25 @@
         }
 
         var funcNum = getUrlParam('CKEditorFuncNum');
-        window.opener.CKEDITOR.tools.callFunction(funcNum, path + "/" + file);
 
-        @if ((Session::has('lfm_type')) && (Session::get('lfm_type') == "Images"))
+        @if (Config::get('lfm.storage_type') === 'aws') {
+            window.opener.CKEDITOR.tools.callFunction(funcNum, file);
+        } @else {
+            window.opener.CKEDITOR.tools.callFunction(funcNum, path + "/" + file);
+
+            @if ((Session::has('lfm_type')) && (Session::get('lfm_type') == "Images"))
             if (path != '/') {
                 window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ \Config::get('lfm.images_url') }}' + path + "/" + file);
             } else {
                 window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ \Config::get('lfm.images_url') }}' + file);
             }
-        @else
+            @else
             if (path != '/') {
-            window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ \Config::get('lfm.files_url') }}' + path + "/" + file);
-        } else {
-            window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ \Config::get('lfm.files_url') }}' + file);
+                window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ \Config::get('lfm.files_url') }}' + path + "/" + file);
+            } else {
+                window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ \Config::get('lfm.files_url') }}' + file);
+            }
+            @endif
         }
         @endif
         window.close();
@@ -429,7 +440,7 @@
     function fileView(x){
         var rnd = makeRandom();
         $('#fileview_body').html(
-                "<img class='img img-responsive center-block' src='{!! Config::get('lfm.images_url') !!}" + $("#working_dir").val() + "/" + x + "?id=" + rnd + "'>"
+            "<img class='img img-responsive center-block' src='{!! Config::get('lfm.images_url') !!}" + $("#working_dir").val() + "/" + x + "?id=" + rnd + "'>"
         );
         $('#fileViewModal').modal();
     }
