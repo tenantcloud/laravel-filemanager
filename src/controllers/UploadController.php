@@ -1,5 +1,6 @@
 <?php namespace Tsawler\Laravelfilemanager\controllers;
 
+use App\Services\FileService;
 use Tsawler\Laravelfilemanager\controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
