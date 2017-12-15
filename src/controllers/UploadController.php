@@ -1,5 +1,6 @@
 <?php namespace Tsawler\Laravelfilemanager\controllers;
 
+use App\Repositories\FileRepository;
 use App\Services\FileService;
 use Tsawler\Laravelfilemanager\controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -61,7 +62,7 @@ class UploadController extends Controller {
 		if (Config::get('lfm.storage_type') === 'aws') {
 			$fileService = app(FileService::class);
 			$file        = Input::file('file_to_upload');
-			$file        = $fileService->store(auth()->user(), $file, 98);
+			$file        = $fileService->store(auth()->user(), $file, FileRepository::FILE_LARAVEL_FILE_MANAGER);
 
 			return app(FileService::class)->generateFullUrl($file);
 		} elseif (Session::get('lfm_type') == "Images") {
