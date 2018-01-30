@@ -62,7 +62,7 @@ class UploadController extends Controller {
 		if (Config::get('lfm.storage_type') === 'aws') {
 			$fileService = app(FileService::class);
 			$file        = Input::file('file_to_upload');
-			$file        = $fileService->store(auth()->user(), $file, FileRepository::FILE_LARAVEL_FILE_MANAGER);
+			$file        = $fileService->store(auth()->user(), $file, FileRepository::FILE_LARAVEL_FILE_MANAGER, 999999999);
 
 			return app(FileService::class)->generateFullUrl($file);
 		} elseif (Session::get('lfm_type') == "Images") {
