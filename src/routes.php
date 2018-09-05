@@ -1,10 +1,8 @@
 <?php
 Route::group(array('middleware' => Config::get('lfm.middleware')), function () // make sure authenticated
 {
-
-    Route::get('sample-ckeditor-integration', function () {
-        return \Illuminate\Support\Facades\View::make('editor');
-    });
+    // fixed route closure
+    Route::get('sample-ckeditor-integration', 'Tsawler\Laravelfilemanager\controllers\LfmController@sampleCkeditorIntegration');
 
     // Show LFM
     Route::get('/laravel-filemanager', 'Tsawler\Laravelfilemanager\controllers\LfmController@show');

@@ -60,4 +60,11 @@ class LfmController extends Controller {
             ->with('working_dir', $working_dir);
     }
 
+    /**
+     * @return mixed
+     */
+    public function sampleCkeditorIntegration()
+    {
+        return \Illuminate\Support\Facades\View::make('editor');
+    }
 }
